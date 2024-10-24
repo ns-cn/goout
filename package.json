@@ -1,0 +1,7 @@
+{
+  "name": "goout-project",
+  "version": "1.0.0",
+  "scripts": {
+    "postinstall": "git config core.hooksPath .githooks && chmod +x .githooks/pre-commit"
+  }
+}
