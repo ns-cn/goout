@@ -26,12 +26,14 @@ onMounted(fetchVersion)
 <style scoped>
 .version-info {
   position: fixed;
-  bottom: 10px;
-  right: 10px;
-  padding: 5px 10px;
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  font-size: 12px;
-  color: #666;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 40px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  font-size: 24px;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 </style>
