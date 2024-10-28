@@ -1,54 +1,32 @@
-<template>
-  <div id="app">
-    <AuthForm />
-    <!-- 您的其他组件 -->
-    <footer>
-      <p>后端版本: {{ backendVersion }}</p>
-    </footer>
-  </div>
-</template>
-
-<script>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
-import AuthForm from './components/Auth.vue'
-
-export default {
-  name: 'App',
-  components: {
-    AuthForm,
-  },
-  setup() {
-    const backendVersion = ref('加载中...')
-
-    const fetchVersion = async () => {
-      try {
-        const response = await axios.get('/api/version')
-        backendVersion.value = response.data.version
-      } catch (error) {
-        console.error('获取后端版本失败:', error)
-        backendVersion.value = '获取失败'
-      }
-    }
-
-    onMounted(() => {
-      fetchVersion()
-    })
-
-    return {
-      backendVersion
-    }
-  }
-}
+<script setup>
+import HelloWorld from './components/HelloWorld.vue'
+import ApiTest from './components/ApiTest.vue'
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<template>
+  <div>
+    <a href="https://vitejs.dev" target="_blank">
+      <img src="/vite.svg" class="logo" alt="Vite logo" />
+    </a>
+    <a href="https://vuejs.org/" target="_blank">
+      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+    </a>
+  </div>
+  <HelloWorld msg="Vite + Vue" />
+  <ApiTest />
+</template>
+
+<style scoped>
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
 }
 </style>

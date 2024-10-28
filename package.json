@@ -1,31 +1,27 @@
 {
-  "name": "goout-backend",
+  "name": "my-fullstack-app",
   "version": "1.0.0",
-  "main": "server.js",
+  "description": "全栈JavaScript应用",
+  "main": "server/index.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "build": "cd frontend && npm run build",
-    "start": "node server.js",
-    "test": "jest",
-    "vercel-build": "npm run build",
-    "frontend": "cd frontend && npm run serve",
-    "backend": "nodemon server.js",
-    "dev:all": "concurrently \"npm run backend\" \"cd frontend && npm run serve\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cross-env DEBUG=express:* npm run build && nodemon server/index.js",
+    "dev": "vercel dev",
+    "publish": "vercel --prod",
     "install:all": "npm install && cd frontend && npm install",
-    "serve:prod": "npm run build && http-server frontend/dist -p 8080"
+    "build": "cd frontend && npm install && npm run build",
+    "vercel-build": "cd frontend && npm install --include=dev && npm run build",
+    "start": "cross-env DEBUG=express:* npm run build && node server/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "goout-backend": "file:",
-    "http-server": "^14.1.1",
-    "mongodb": "^6.10.0"
+    "my-fullstack-app": "file:"
   },
   "devDependencies": {
-    "@eslint/config-array": "^0.18.0",
-    "@eslint/object-schema": "^2.1.4",
-    "concurrently": "^8.2.2",
-    "nodemon": "^3.1.7"
+    "concurrently": "^8.0.1",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.22"
   }
 }
