@@ -1,6 +1,7 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import ApiTest from './components/ApiTest.vue'
+import VersionInfo from './components/VersionInfo.vue'
 </script>
 
 <template>
@@ -14,6 +15,7 @@ import ApiTest from './components/ApiTest.vue'
   </div>
   <HelloWorld msg="Vite + Vue" />
   <ApiTest />
+  <VersionInfo />
 </template>
 
 <style scoped>
