@@ -11,7 +11,8 @@
     "install:all": "npm install && cd frontend && npm install",
     "build": "cd frontend && npm install && npm run build",
     "vercel-build": "cd frontend && npm install --include=dev && npm run build",
-    "start": "cross-env DEBUG=express:* npm run build && node server/index.js"
+    "start": "cross-env DEBUG=express:* npm run build && node server/index.js",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# 生成版本号
+VERSION=$(date "+%Y.%m.%d%H%M")
+
+# 更新 version.js 文件
+cat > server/version.js << EOL
+// 此文件由 git pre-commit hook 自动更新
+// 格式：YYYY.MM.DDHHMM
+module.exports = {
+  VERSION: '${VERSION}'
+};
+EOL
+
+# 将更新后的 version.js 添加到本次提交
+git add server/version.js
+
+echo "Updated version to $VERSION"
