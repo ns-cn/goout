@@ -141,3 +141,6 @@ yarn-error.log*
 *.sln
 *.sw?
 .vercel
+
+# 其他忽略项...
+.env

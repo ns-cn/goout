@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <AuthForm />
     <!-- 您的其他组件 -->
     <footer>
       <p>后端版本: {{ backendVersion }}</p>
@@ -10,9 +11,13 @@
 <script>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import AuthForm from './components/Auth.vue'
 
 export default {
   name: 'App',
+  components: {
+    AuthForm,
+  },
   setup() {
     const backendVersion = ref('加载中...')
 
