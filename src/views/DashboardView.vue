@@ -35,7 +35,7 @@
           class="mb-2"
           :active="selectedItem === index"
           :active-color="currentTheme"
-          @click="selectedItem = index"
+          @click="handleMenuClick(item)"
         >
         </v-list-item>
       </v-list>
@@ -68,24 +68,65 @@
     <!-- 主内容区域 -->
     <v-main class="grey lighten-4">
       <v-container fluid class="pa-6">
-        <v-row>
-          <v-col cols="12">
-            <v-card class="pa-6" elevation="0">
-              <div class="d-flex align-center mb-6">
-                <h1 class="text-h5 font-weight-regular">欢迎回来，{{ userInfo.nickname }}</h1>
-                <v-spacer></v-spacer>
-                <v-btn
-                  :color="currentTheme"
-                  prepend-icon="mdi-plus"
-                  variant="flat"
-                >
-                  新建
-                </v-btn>
-              </div>
-              <p class="text-body-1 text-medium-emphasis">开始探索你的生活圈</p>
-            </v-card>
-          </v-col>
-        </v-row>
+        <!-- 默认内容 -->
+        <template v-if="currentView === 'dashboard'">
+          <v-row>
+            <v-col cols="12">
+              <v-card class="pa-6" elevation="0">
+                <div class="d-flex align-center mb-6">
+                  <h1 class="text-h5 font-weight-regular">欢迎回来，{{ userInfo.nickname }}</h1>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    :color="currentTheme"
+                    prepend-icon="mdi-plus"
+                    variant="flat"
+                  >
+                    新建
+                  </v-btn>
+                </div>
+                <p class="text-body-1 text-medium-emphasis">开始探索你的生活圈</p>
+              </v-card>
+            </v-col>
+          </v-row>
+        </template>
+
+        <!-- 关于页面内容 -->
+        <template v-else-if="currentView === 'about'">
+          <div class="about-container">
+            <!-- 背景字母 -->
+            <div class="background-text">
+              <div class="letter g">G</div>
+              <div class="letter o1">O</div>
+              <div class="letter o2">O</div>
+              <div class="letter u">U</div>
+              <div class="letter t">T</div>
+            </div>
+
+            <!-- 内容区域 -->
+            <v-row justify="center">
+              <v-col cols="12" md="8" lg="6">
+                <v-card class="about-card" elevation="0">
+                  <v-card-title class="text-h3 font-weight-bold text-center mb-6">
+                    GoOut
+                  </v-card-title>
+                  <v-card-subtitle class="text-h6 text-center mb-8">
+                    探索你的生活圈
+                  </v-card-subtitle>
+                  <v-card-text class="text-body-1">
+                    <p class="mb-4">
+                      GoOut 是一个帮助你规划和记录生活的应用。无论是日常出行还是特别的旅程，
+                      我们都希望能让你的每一次出行变得更加轻松愉快。
+                    </p>
+                    <p class="mb-4">
+                      我们相信，美好的生活不仅在于目的地，更在于一路上的点点滴滴。
+                    </p>
+                  </v-card-text>
+                  <Version class="version-info" />
+                </v-card>
+              </v-col>
+            </v-row>
+          </div>
+        </template>
       </v-container>
     </v-main>
 
@@ -107,6 +148,7 @@ import { useTheme } from 'vuetify'
 import { ElMessage } from 'element-plus'
 import Settings from '../components/Settings.vue'
 import ProfileEdit from '../components/ProfileEdit.vue'
+import Version from '../components/Version.vue'
 
 const router = useRouter()
 const drawer = ref(false)
@@ -122,11 +164,14 @@ const userInfo = ref({
 const theme = useTheme()
 const currentTheme = ref(localStorage.getItem('theme') || '#1867C0')
 
+// 添加当前视图状态
+const currentView = ref('dashboard')
+
 // 修改菜单项配置
 const menuItems = [
-  { title: '常用物品', icon: 'mdi-bag-personal-outline' },
-  { title: '行程', icon: 'mdi-map-marker-path' },
-  { title: '关于', icon: 'mdi-information-outline' }
+  { title: '常用物品', icon: 'mdi-bag-personal-outline', view: 'items' },
+  { title: '行程', icon: 'mdi-map-marker-path', view: 'trips' },
+  { title: '关于', icon: 'mdi-information-outline', view: 'about' }
 ]
 
 onMounted(() => {
@@ -187,6 +232,12 @@ const openProfileEdit = () => {
   showProfileEdit.value = true // 显示个人信息修改对话框
 }
 
+// 修改菜单点击处理函数
+const handleMenuClick = (item) => {
+  drawer.value = false // 关闭侧边栏
+  currentView.value = item.view
+}
+
 // 监听主题变化
 const handleThemeChange = (color) => {
   // 更新主题颜色
@@ -227,4 +278,95 @@ const logout = () => {
 .user-info-bg {
   background: linear-gradient(to right, var(--v-theme-primary), rgba(var(--v-theme-primary), 0.8));
 }
+
+/* 添加关于页面相关样式 */
+.about-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.background-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.letter {
+  position: absolute;
+  font-size: 25vw;
+  font-weight: 900;
+  opacity: 0.03;
+  color: var(--v-theme-primary);
+  animation: float 20s ease-in-out infinite;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.g {
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+  transform: rotate(-15deg);
+}
+
+.o1 {
+  top: 30%;
+  left: 25%;
+  animation-delay: -4s;
+  transform: rotate(10deg);
+}
+
+.o2 {
+  top: 15%;
+  right: 35%;
+  animation-delay: -8s;
+  transform: rotate(-5deg);
+}
+
+.u {
+  bottom: 20%;
+  left: 40%;
+  animation-delay: -12s;
+  transform: rotate(8deg);
+}
+
+.t {
+  bottom: 25%;
+  right: 10%;
+  animation-delay: -16s;
+  transform: rotate(-12deg);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(var(--rotation));
+  }
+  50% {
+    transform: translateY(-20px) rotate(var(--rotation));
+  }
+}
+
+.about-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.version-info {
+  margin-top: 32px;
+  text-align: center;
+}
+
+/* 为每个字母设置不同的旋转角度 */
+.g { --rotation: -15deg; }
+.o1 { --rotation: 10deg; }
+.o2 { --rotation: -5deg; }
+.u { --rotation: 8deg; }
+.t { --rotation: -12deg; }
 </style>
