@@ -1,28 +1,31 @@
 {
-  "name": "my-fullstack-app",
-  "version": "1.0.0",
-  "description": "全栈JavaScript应用",
-  "main": "server/index.js",
+  "name": "goout",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev:frontend": "cd frontend && npm run dev",
-    "dev:backend": "cross-env DEBUG=express:* npm run build && nodemon server/index.js",
-    "dev": "vercel dev",
-    "publish": "vercel --prod",
-    "install:all": "npm install && cd frontend && npm install",
-    "build": "cd frontend && npm install && npm run build",
-    "vercel-build": "cd frontend && npm install --include=dev && npm run build",
-    "start": "cross-env DEBUG=express:* npm run build && node server/index.js",
-    "prepare": "git config core.hooksPath .githooks"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "my-fullstack-app": "file:"
+    "@mdi/font": "^7.4.47",
+    "axios": "^1.6.7",
+    "element-plus": "^2.5.6",
+    "goout": "file:",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.15",
+    "vue-router": "^4.2.5",
+    "vuetify": "^3.0.0"
   },
   "devDependencies": {
-    "concurrently": "^8.0.1",
-    "cross-env": "^7.0.3",
-    "nodemon": "^2.0.22"
+    "@vitejs/plugin-vue": "^5.0.3",
+    "eslint": "^8.56.0",
+    "eslint-plugin-vue": "^9.21.1",
+    "prettier": "^3.2.5",
+    "sass": "^1.71.1",
+    "vite": "^5.0.11"
   }
 }
